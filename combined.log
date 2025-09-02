@@ -350,3 +350,5 @@
 {"level":"info","message":"PDF email sent successfully with message id <1bc56925-6303-e738-0626-f6712aa36590@localhost>"}
 {"level":"info","message":"Connected successfully on port 1057"}
 {"level":"info","message":"Connected to MongoDB"}
+{"level":"info","message":"Connected successfully on port 1057"}
+{"level":"info","message":"Connected to MongoDB"}
