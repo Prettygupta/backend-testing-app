@@ -1,0 +1,16 @@
+version: "3"
+services:
+  backend:
+    container_name: backend-dev
+    build: .
+    ports:
+      - 1057:1057
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - backend-network-dev
+
+networks:
+  backend-network-dev:
+    driver: bridge

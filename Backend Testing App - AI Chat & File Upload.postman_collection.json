@@ -1,0 +1,240 @@
+{
+	"info": {
+		"_postman_id": "9f795c36-9994-4999-84e7-ea5fcadb1352",
+		"name": "Backend Testing App - AI Chat & File Upload",
+		"description": "Complete API collection for file upload, AI chat with Gemini, and PDF generation functionality",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "32396198",
+		"_collection_link": "https://cloudy-water-685240.postman.co/workspace/03d6c132-51cd-4972-897f-0ed20ba79072/collection/32396198-9f795c36-9994-4999-84e7-ea5fcadb1352?action=share&source=collection_link&creator=32396198"
+	},
+	"item": [
+		{
+			"name": "File Upload",
+			"item": [
+				{
+					"name": "Upload Image",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "postman-cloud:///1eefcb3c-b527-4b70-81b1-d5e463864428"
+								}
+							]
+						},
+						"url": "{{baseUrl}}/upload/image",
+						"description": "Upload an image file (JPG, PNG, WEBP) to S3 storage"
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Video",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "video",
+									"type": "file",
+									"src": "/Users/prettygupta/Downloads/Screen Recording 2025-08-26 at 11.39.27 AM.mov"
+								}
+							]
+						},
+						"url": "{{baseUrl}}/upload/video",
+						"description": "Upload a video file (MP4, MOV, AVI) to S3 storage"
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Document",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "document",
+									"type": "file",
+									"src": "postman-cloud:///1ef0afe8-7db9-43a0-914a-7a952160c59b"
+								}
+							]
+						},
+						"url": "{{baseUrl}}/upload/document",
+						"description": "Upload a document file (PDF, Word, Excel, CSV) to S3 storage"
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Multiple Files",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": "postman-cloud:///1ef0afe8-7db9-43a0-914a-7a952160c59b"
+								},
+								{
+									"key": "files",
+									"type": "file",
+									"src": "postman-cloud:///1eefcb3c-b527-4b70-81b1-d5e463864428"
+								}
+							]
+						},
+						"url": "{{baseUrl}}/upload/multiple",
+						"description": "Upload multiple files (up to 5) at once"
+					},
+					"response": []
+				},
+				{
+					"name": "Get File Access",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{baseUrl}}/getFileAccess/documents/8f7d467a-589a-4234-acbc-dcef29a20e4a.csv",
+						"description": "Access/download uploaded files from S3"
+					},
+					"response": []
+				}
+			],
+			"description": "File upload endpoints for images, videos, and documents"
+		},
+		{
+			"name": "AI Chat",
+			"item": [
+				{
+					"name": "chat",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"prompt\": \"What do you see in this image?\",\n  \"filename\": \"images/645bf4ec-cce0-4922-a4ec-e592f4b2a048.png\"\n}"
+						},
+						"url": "{{baseUrl}}/ai/chat",
+						"description": "Chat with AI about uploaded files using Google Gemini"
+					},
+					"response": []
+				}
+			],
+			"description": "AI chat functionality using Google Gemini"
+		},
+		{
+			"name": "Save Session",
+			"item": [
+				{
+					"name": "Save Complete Session",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userEmail\": \"prettygupta89@gmail.com\",\n    \"uploadedFiles\": [\"http://localhost:1057/api/getFileAccess/images/645bf4ec-cce0-4922-a4ec-e592f4b2a048.png\", \"http://localhost:1057/api/getFileAccess/documents/8f7d467a-589a-4234-acbc-dcef29a20e4a.csv\"],\n    \n    \"conversations\": [{\"prompt\": \"What do you see in this image?\", \"response\": \"I can see a beautiful landscape with mountains...\"}, {\"prompt\": \"What colors are dominant?\", \"response\": \"The dominant colors are blue and green...\"}]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/save/session",
+						"description": "Save complete session with files, conversations, and user email to database"
+					},
+					"response": []
+				}
+			],
+			"description": "Save session data to database in one click"
+		},
+		{
+			"name": "PDF Generation",
+			"item": [
+				{
+					"name": "Download PDF Report",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{baseUrl}}/pdf/generate/hello@mailinator.com",
+						"description": "Download PDF report with embedded images and conversation history"
+					},
+					"response": []
+				},
+				{
+					"name": "Email PDF Report",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "{{baseUrl}}/pdf/email/prettygupta89@gmail.com",
+						"description": "Generate and email PDF report to user's email address"
+					},
+					"response": []
+				}
+			],
+			"description": "PDF generation and email functionality"
+		},
+		{
+			"name": "System",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:1057/health",
+						"description": "Check if server is running"
+					},
+					"response": []
+				},
+				{
+					"name": "Server Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:1057/",
+						"description": "Get server status"
+					},
+					"response": []
+				}
+			],
+			"description": "System health and status endpoints"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Set common variables",
+					"pm.collectionVariables.set('baseUrl', 'http://localhost:1057/api');",
+					"pm.collectionVariables.set('userEmail', 'user@example.com');"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:1057/api",
+			"type": "string"
+		},
+		{
+			"key": "userEmail",
+			"value": "user@example.com",
+			"type": "string"
+		}
+	]
+}
